@@ -10,9 +10,57 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_24_150748) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_24_153200) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "actuals", force: :cascade do |t|
+    t.integer "unplanned_pto"
+    t.integer "adjust_max_number_of_points"
+    t.integer "completed_points"
+    t.integer "unfinished_points"
+    t.integer "sprint_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "averages", force: :cascade do |t|
+    t.integer "avg_velocity"
+    t.decimal "avg_sprint_completed", precision: 8, scale: 2
+    t.integer "avg_pts_per_dev_per_day_per_sprint"
+    t.integer "avg_pts_per_dev_per_sprint"
+    t.integer "sprint_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "plannings", force: :cascade do |t|
+    t.integer "devs_count"
+    t.integer "working_days"
+    t.integer "planned_pto"
+    t.integer "recommended_number_of_points"
+    t.integer "committed_points"
+    t.integer "sprint_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "sprints", force: :cascade do |t|
+    t.string "name"
+    t.string "status"
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.integer "squad_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "squads", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer "user_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
